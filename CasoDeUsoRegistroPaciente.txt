@@ -1,0 +1,31 @@
+@startuml
+skinparam style strictuml
+skinparam activityBorderThickness 1
+skinparam activityBackgroundColor #EFEFEF
+title Registro del Paciente - CADEP
+
+start
+
+:Paciente llega al centro;
+
+if (¿Paciente registrado?) then (No)
+  :Recepcionista registra paciente;
+
+  if (¿Trae referencia médica?) then (Sí)
+    :Se valida y continúa proceso normalmente;
+  else (No)
+    if (¿Es para psicología?) then (Sí)
+      :Continúa sin referencia médica;
+    else (No)
+      :Paciente debe traer referencia médica;
+      stop
+    endif
+  endif
+
+  :Paciente o responsable firma registro legal;
+else (Sí)
+  :Recepcionista verifica datos del paciente;
+endif
+
+stop
+@enduml

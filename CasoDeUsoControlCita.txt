@@ -1,0 +1,35 @@
+@startuml
+skinparam style strictuml
+skinparam activityBorderThickness 1
+skinparam activityBackgroundColor #EFEFEF
+title Control de Citas - CADEP
+
+start
+
+:Paciente solicita cita;
+
+:Recepcionista revisa calendario;
+
+if (¿Hay disponibilidad en la semana correspondiente?) then (Sí)
+  :Recepcionista establece fecha, hora y duración;
+  :Sistema registra automáticamente cita\nen calendario según semana A/B;
+else (No)
+  :Paciente queda en lista de espera;
+  stop
+endif
+
+if (¿Paciente asiste a la cita?) then (Sí)
+  :Paciente llega a la cita;
+  stop
+else (No)
+  :Recepcionista marca ausencia del paciente;
+
+  if (¿Faltó 3 veces o más?) then (Sí)
+    :Paciente vuelve a lista de espera;
+    stop
+  else (No)
+    :Recepcionista contacta paciente;
+    --> :¿Paciente asiste a la cita?;
+  endif
+endif
+@enduml
