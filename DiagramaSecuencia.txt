@@ -1,0 +1,63 @@
+@startuml
+title Diagrama de Secuencia - Inscripción, Cita y Atención (CADEP)
+
+actor Paciente
+actor Responsable
+participant Recepcionista
+participant Sistema
+participant Calendario
+participant Terapeuta
+participant Expediente
+
+Paciente -> Recepcionista: Solicita inscripción o cita
+Recepcionista -> Sistema: Verifica si paciente está registrado
+alt Paciente no registrado
+  Recepcionista -> Sistema: Registra nuevo paciente
+  alt Trae referencia médica
+    Recepcionista -> Sistema: Valida referencia
+  else No trae referencia
+    alt Es para psicología
+      Recepcionista -> Sistema: Permite continuar sin referencia
+    else Otra especialidad
+      Recepcionista -> Paciente: Solicita referencia médica
+      return
+    end
+  end
+  Responsable -> Recepcionista: Firma de registro legal
+else Paciente registrado
+  Recepcionista -> Sistema: Verifica y actualiza datos
+end
+
+Paciente -> Recepcionista: Solicita cita
+Recepcionista -> Sistema: Consulta disponibilidad
+Sistema -> Calendario: Consulta horarios disponibles semana A/B
+Calendario --> Sistema: Retorna disponibilidad
+
+alt Hay disponibilidad
+  Recepcionista -> Sistema: Asigna fecha, hora y duración
+  Sistema -> Calendario: Registra cita
+else No hay disponibilidad
+  Sistema -> Recepcionista: Agrega a lista de espera
+  return
+end
+
+alt Paciente asiste a la cita
+  Paciente -> Terapeuta: Asiste a la cita
+  Terapeuta -> Sistema: Registra inicio de terapia
+  alt Se requieren radiografías
+    Terapeuta -> Expediente: Adjunta radiografías
+  end
+  Terapeuta -> Sistema: Evalúa progreso
+  alt Caso finalizado
+    Terapeuta -> Sistema: Marca como concluido
+  end
+  Recepcionista -> Sistema: Genera reporte diario
+else Paciente no asiste
+  Recepcionista -> Sistema: Marca ausencia
+  alt Faltó 3 veces o más
+    Sistema -> Recepcionista: Reasigna a lista de espera
+  else Menos de 3 faltas
+    Recepcionista -> Paciente: Contacta para reagendar
+  end
+end
+@enduml
