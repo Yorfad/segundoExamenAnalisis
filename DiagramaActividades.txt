@@ -1,0 +1,29 @@
+@startuml
+skinparam style strictuml
+skinparam activityBorderThickness 1
+skinparam activityBackgroundColor #F5F5F5
+title Actualización del Expediente del Paciente - CADEP
+
+start
+
+:Terapeuta finaliza cita con paciente;
+
+:Abre expediente clínico del paciente;
+
+:Registra reporte de la cita;
+:Describe actividades realizadas en sesión;
+:Anota resultados obtenidos (positivos o negativos);
+:Agrega observaciones o recomendaciones;
+
+:Guarda el reporte en el expediente;
+
+if (¿Caso concluido?) then (Sí)
+  :Marca expediente como finalizado;
+else (No)
+  :Expediente queda activo para próximas sesiones;
+endif
+
+:Expediente disponible para próxima revisión o seguimiento;
+
+stop
+@enduml
