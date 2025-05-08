@@ -1,0 +1,21 @@
+@startuml
+title Diagrama de Casos de Uso - Login con Validación de Rol
+
+actor Colaborador as C
+
+rectangle "Sistema CADEP" {
+  usecase "Ingresar al sistema" as UC1
+  usecase "Validar credenciales" as UC2
+  usecase "Verificar rol de usuario" as UC3
+  usecase "Mostrar vista recepcionista" as UC4
+  usecase "Mostrar vista terapeuta" as UC5
+  usecase "Mostrar error de login" as UC6
+}
+
+C --> UC1
+UC1 --> UC2
+UC2 --> UC3 : [Credenciales válidas]
+UC2 --> UC6 : [Credenciales inválidas]
+UC3 --> UC4 : [Rol = Recepcionista]
+UC3 --> UC5 : [Rol = Terapeuta]
+@enduml

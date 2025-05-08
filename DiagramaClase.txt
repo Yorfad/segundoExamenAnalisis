@@ -1,0 +1,194 @@
+@startuml
+title Diagrama de Clases - CADEP (completo)
+
+skinparam classAttributeIconSize 0
+
+class Patient {
++id_patient : int
+  +cui_patient : string
+  +firstname_patient : string
+  +middlename_patient : string
+  +thirdname_patient : string
+  +lastname_patient : string
+  +secondlastname_patient : string
+  +thirdlastname_patient : string
+  +birthdate_patient : date
+  +age_patient : int
+  +weight_patient : decimal(5,2)
+  +schooling_patient : string
+  +phone_patient : string
+  +address_patient : text
+  +gender_patient : string
+  +religion_patient : string
+  +maritalstatus_patient : string
+  +dependentfamily_patient : boolean
+  +reasonforconsultation_patient : text
+  +referreddoctor_patient : string
+  +createdate_patient : datetime
+  +updatedate_patient : datetime
+  -- Llaves foráneas --
+  +idbirth_department_patient : int
+  +idbirth_municipality_patient : int
+  +id_department_patient : int
+  +id_municipality_patient : int
+  +id_branch_patient : int
+  +id_state_patient : int
+  +idcreate_user_patient : int
+  +idupdater_user_patient : int
+  -create()
+  -update()
+  -getByAppointment()
+}
+
+class Relative {
+  +id_relative : int
+  +relationship : string
+  -create()
+  -update()
+  -delete()
+}
+
+class User {
+  +id_user : int
+  +name : string
+  +password : string
+  -create()
+  -update()
+  -authenticate()
+}
+
+class Role {
+  +id_role : int
+  +name : string
+  +description : string
+  +id_state_role: int
+  +idcreate_user_role: int
+  +createdate_role: string
+  +idupdater_user_role: int
+  +updatedate_role: string
+  -getStateRole()
+  -updateEstateRole()
+  -assignPermissions()
+}
+
+class Collaborator{
+  +id_Collaborator : int
+  +cui_Collaborator : string
+  +firstname_Collaborator : string
+  +middlename_Collaborator : string
+  +thirdname_Collaborator : string
+  +lastname_Collaborator : string
+  +secondlastname_Collaborator : string
+  +thirdlastname_Collaborator : string
+  +profession_Collaborator : text
+  +phone_Collaborator : string
+  +birthdate_Collaborator: date
+  +age_Collaborator : int
+  +address_Collaborator : text
+  +gender_Collaborator : string
+  +maritalstatus_Collaborator : string
+  +createdate_Collaborator : datetime
+  +updatedate_Collaborator : datetime
+  +id_user_Collaborator : int
+  +idbirth_department_Collaborator : int
+  +idbirth_municipality_Collaborator : int
+  +id_department_Collaborator : int
+  +id_municipality_Collaborator : int
+  +id_area_Collaborator : int
+  +id_branch_Collaborator : int
+  +id_state_Collaborator : int
+  +idcreate_user_Collaborator : int
+  +idupdater_user_Collaborator : int
+  -create()
+  -update()
+}
+
+class Area {
+  +id_area : int
+  +name : string
+  +description : string
+  -getDuration()
+}
+
+class Branch {
+  +id_branch : int
+  +name : string
+  +phone : string
+}
+
+class Department {
+  +id_department : int
+  +name : string
+}
+
+class Municipality {
+  +id_municipality : int
+  +name : string
+}
+
+class State {
+  +id_state : int
+  +name : string
+}
+
+class Archive {
+  +id_archive : int
+  -create()
+  -addReport()
+  -getHistorial()
+  -updateReport()
+}
+
+class Appointment {
+  +id_appointment : int
+  +date_appointment : string
+  +createdate_appointment : datetime
+  +updatedate_appointment : datetime
+  +id_employee_appointment : int
+  +id_state_appointment : int
+  +idcreate_user_appointment : int
+  +idupdater_user_appointment : int
+  -create()
+  -cancel()
+  -associeteCollaborator()
+  -getUserCreateAppointment()
+  -reprogram()
+  -assingState()
+}
+
+class AppointmentReport {
+  +id_appointmentreport : int
+  +objective : string
+  +observations : text
+  +weight : decimal
+  +height : decimal
+  -create()
+  -update()
+  -verificate()
+}
+
+' Relaciones
+Patient --> Archive
+Archive --> AppointmentReport
+Appointment --> AppointmentReport
+Appointment --> Collaborator
+Collaborator --> Area
+Collaborator --> Branch
+Collaborator --> User
+User --> Role
+Collaborator --> State
+User --> State
+Role --> State
+Patient --> State
+Appointment --> State
+Branch --> State
+Area --> State
+Relative --> Patient
+Municipality --> Department
+Branch --> Municipality
+Branch --> Department
+Patient --> Municipality
+Patient --> Department
+Collaborator --> Municipality
+Collaborator --> Department
+@enduml

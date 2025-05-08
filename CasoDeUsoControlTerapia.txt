@@ -1,0 +1,28 @@
+@startuml
+skinparam style strictuml
+skinparam activityBorderThickness 1
+skinparam activityBackgroundColor #EFEFEF
+title Registro de la Terapia - CADEP
+
+start
+
+:Paciente llega a la cita;
+
+:Terapista realiza terapia;
+
+if (¿Se necesitan radiografías?) then (Sí)
+  :Terapista adjunta radiografías al expediente;
+else (No)
+endif
+
+:Terapista evalúa progreso del paciente;
+
+if (¿Caso finalizado?) then (Sí)
+  :Terapista concluye caso y lo marca en sistema;
+else (No)
+endif
+
+:Recepcionista genera reporte diario\nde citas atendidas;
+
+stop
+@enduml
